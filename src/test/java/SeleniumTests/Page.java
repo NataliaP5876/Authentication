@@ -4,6 +4,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+
 public abstract class Page {
     protected WebDriver driver;
 
@@ -25,5 +27,5 @@ public abstract class Page {
         }
     }
 
-    public abstract void open();
+    public abstract void open() throws IOException;
 }

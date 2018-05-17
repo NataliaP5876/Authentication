@@ -1,11 +1,19 @@
 package SeleniumTests;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class LoginPage extends Page {
+
+    private final String username = "username";
+    private final String password = "password";
 
     @FindBy(name="login")
     public WebElement fieldLogin;
@@ -30,15 +38,12 @@ public class LoginPage extends Page {
         init();
     }
 
-
+    @Override
     public void open() {
-        //driver.get("https://admin:admin123@diploma-courses.7bits.it/login");
+        driver.get("https://admin:admin123@diploma-courses.7bits.it/login");
         driver.get("https://diploma-courses.7bits.it/login");
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        WebElement explicitWait = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
+        driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
     }
 
     public HomePage loginUser(String login, String password){
@@ -46,13 +51,7 @@ public class LoginPage extends Page {
         type(fieldPassword,password);
         buttonLogin.click();
         return PageFactory.initElements(driver, HomePage.class);
-
     }
-
-
-
-
-
     public String buttonStatus(){
         return buttonLogin.getAttribute("disabled");
     }
